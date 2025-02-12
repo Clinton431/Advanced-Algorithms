@@ -71,6 +71,43 @@ result = linear_search(array, target)
 print(f"Element found at index: {result}")
 ```
 
+Binary Search Algorithm Analysis
+Algorithm Description
+Binary Search is a searching algorithm that finds the position of a target value within a sorted array. It works by repeatedly dividing the search interval in half, comparing the middle element with the target value, and eliminating the half where the target cannot lie.
+Time Complexity
+
+Best Case: O(1)
+
+Occurs when the target element is at the middle of the array
+Only requires one comparison
+
+
+Average Case: O(log n)
+
+Each iteration eliminates half of the remaining elements
+For an array of size n, requires approximately log₂(n) comparisons
+
+
+Worst Case: O(log n)
+
+Occurs when the target element is at either end of the array or not present
+Requires log₂(n) comparisons to determine the element's presence or absence
+
+
+
+Space Complexity
+
+Iterative Implementation: O(1)
+
+Only requires a constant amount of extra space for variables (left, right, mid)
+No additional data structures needed
+
+
+Recursive Implementation: O(log n)
+
+Requires space on the call stack proportional to the number of recursive calls
+Each recursive call stores local variables
+
 ### Running Tests
 ```bash
 python -m unittest tests/test_linear_search.py
