@@ -350,13 +350,6 @@ print(sorted_numbers)  # Output: [11, 12, 22, 25, 34, 64, 90]
 - Educational purposes to understand basic sorting concepts
 - When the cost of swapping elements is high (makes fewer swaps than bubble sort)
 
-## Contributing
-Feel free to submit issues and enhancement requests or fork this implementation to create your own version.
-
-## License
-This implementation is released under the MIT License. Feel free to use it in your projects.
-
-
 ### Running Tests
 ```bash
 python -m unittest tests/test_linear_search.py
