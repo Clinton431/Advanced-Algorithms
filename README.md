@@ -108,6 +108,255 @@ Recursive Implementation: O(log n)
 Requires space on the call stack proportional to the number of recursive calls
 Each recursive call stores local variables
 
+# Sorting Algorithms
+# Sorting Algorithms
+
+## What Are Sorting Algorithms?
+Sorting algorithms are methods used to arrange elements in a specific sequence or order, typically in ascending or descending order. They are fundamental to computer science and are used extensively in various applications to organize and structure data efficiently.
+
+## Common Sorting Algorithms
+
+### 1. Bubble Sort
+- **How it works**: Repeatedly steps through the list, compares adjacent elements, and swaps them if they're in the wrong order.
+- **Time Complexity**: O(n²)
+- **Space Complexity**: O(1)
+- **Best Used When**: 
+  - Working with small datasets
+  - Teaching sorting concepts
+  - Memory space is limited
+
+### 2. Quick Sort
+- **How it works**: Uses a divide-and-conquer strategy by selecting a 'pivot' element and partitioning the array around it.
+- **Time Complexity**: Average O(n log n), Worst O(n²)
+- **Space Complexity**: O(log n)
+- **Best Used When**:
+  - Working with large datasets
+  - Memory space is not a constraint
+  - Average-case performance is important
+
+### 3. Merge Sort
+- **How it works**: Divides the array into smaller subarrays, sorts them, and then merges them back together.
+- **Time Complexity**: O(n log n)
+- **Space Complexity**: O(n)
+- **Best Used When**:
+  - Stable sorting is required
+  - Working with linked lists
+  - External sorting is needed
+
+### 4. Selection Sort
+- **How it works**: Repeatedly finds the minimum element from the unsorted portion and places it at the beginning.
+- **Time Complexity**: O(n²)
+- **Space Complexity**: O(1)
+- **Best Used When**:
+  - Memory writing needs to be minimized
+  - Working with small arrays
+  - Simplicity is preferred over efficiency
+
+### 5. Insertion Sort
+- **How it works**: Builds the final sorted array one item at a time by repeatedly inserting elements in their correct position.
+- **Time Complexity**: O(n²)
+- **Space Complexity**: O(1)
+- **Best Used When**:
+  - Working with small datasets
+  - Data is nearly sorted
+  - Online sorting (sorting data as it is received)
+
+## Real-World Use Cases
+
+### 1. Database Management
+- Sorting records for efficient retrieval
+- Organizing data in indexes
+- Optimizing query results
+
+### 2. File Systems
+- Organizing files and directories
+- Maintaining sorted file listings
+- Managing file hierarchies
+
+### 3. User Interfaces
+- Sorting items in lists or tables
+- Organizing menu items
+- Arranging elements alphabetically
+
+### 4. Data Analysis
+- Organizing datasets for analysis
+- Preparing data for visualization
+- Statistical computations
+
+### 5. Operating Systems
+- Process scheduling
+- Memory management
+- File organization
+
+### 6. E-commerce
+- Product listing by price
+- Sorting search results
+- Customer ratings organization
+
+## Selection Guide
+
+Choose your sorting algorithm based on:
+
+1. **Data Size**
+   - Small data (< 50 elements): Insertion Sort, Bubble Sort
+   - Medium data: Quick Sort, Merge Sort
+   - Large data: Quick Sort, Merge Sort
+
+2. **Memory Constraints**
+   - Limited memory: Bubble Sort, Selection Sort
+   - Adequate memory: Quick Sort, Merge Sort
+
+3. **Data Characteristics**
+   - Nearly sorted data: Insertion Sort
+   - Random data: Quick Sort
+   - Linked list: Merge Sort
+
+4. **Stability Requirements**
+   - Stable sorting needed: Merge Sort, Insertion Sort
+   - Stability not important: Quick Sort, Selection Sort
+
+## Performance Comparison
+
+| Algorithm      | Best Case  | Average Case | Worst Case | Space      | Stable |
+|---------------|------------|--------------|------------|------------|--------|
+| Bubble Sort   | O(n)       | O(n²)        | O(n²)      | O(1)       | Yes    |
+| Quick Sort    | O(n log n) | O(n log n)   | O(n²)      | O(log n)   | No     |
+| Merge Sort    | O(n log n) | O(n log n)   | O(n log n) | O(n)       | Yes    |
+| Selection Sort| O(n²)      | O(n²)        | O(n²)      | O(1)       | No     |
+| Insertion Sort| O(n)       | O(n²)        | O(n²)      | O(1)       | Yes    |
+
+# Bubble Sort
+Bubble Sort
+Think of it like sorting a deck of cards where you repeatedly go through the deck, comparing two cards at a time. If they're in the wrong order, you swap them. The larger numbers "bubble up" to the end of the array, like bubbles rising in water. It's simple but inefficient for large datasets.
+
+The Main Function:
+
+Takes an array as input
+Uses two nested loops to compare and swap elements
+Returns the sorted array
+
+
+The Algorithm Steps:
+
+Compare adjacent elements (arr[j] and arr[j+1])
+If they are in the wrong order, swap them
+Continue this process for each pair of adjacent elements to the end
+After each iteration, the largest unsorted element moves to its correct position
+
+
+Optimization:
+
+The swapped flag helps optimize the algorithm
+If no swaps occur in a pass, the array is already sorted
+We can break out of the loop early
+
+
+Time Complexity:
+
+Worst and Average Case: O(n²)
+Best Case (when array is already sorted): O(n)
+
+
+Space Complexity:
+
+O(1) as it only uses a constant amount of extra space
+
+
+
+To test this code, you can run it directly. The output will look something like this:
+
+ Bubble Sort
+
+# How it works: Repeatedly steps through the list, compares adjacent elements, and swaps them if they're in the wrong order.
+# Time Complexity: O(n²)
+# Space Complexity: O(1)
+# Best Used When:
+
+## Working with small datasets
+## Teaching sorting concepts
+## Memory space is limited
+
+## Selection Sort
+# Selection Sort Algorithm
+
+## Overview
+Selection Sort is a simple comparison-based sorting algorithm. It divides the input array into two portions: a sorted portion and an unsorted portion. The algorithm repeatedly selects the smallest element from the unsorted portion and adds it to the sorted portion.
+
+## Time Complexity
+- Worst Case: O(n²)
+- Average Case: O(n²)
+- Best Case: O(n²)
+
+## Space Complexity
+- O(1) - Selection Sort is an in-place sorting algorithm
+
+## Advantages
+1. Simple implementation
+2. Works well with small datasets
+3. Performs well on arrays that are already partially sorted
+4. Memory efficient with O(1) space complexity
+5. Minimal memory writes compared to other algorithms
+
+## Disadvantages
+1. Poor performance on large datasets due to O(n²) time complexity
+2. Not stable - might change the relative order of equal elements
+3. No early termination - must complete all iterations even if array is sorted
+
+## Implementation
+
+```python
+def selection_sort(arr):
+    n = len(arr)
+    
+    for i in range(n):
+        # Find the minimum element in the unsorted part
+        min_idx = i
+        for j in range(i + 1, n):
+            if arr[j] < arr[min_idx]:
+                min_idx = j
+        
+        # Swap the found minimum element with the first element of unsorted part
+        arr[i], arr[min_idx] = arr[min_idx], arr[i]
+    
+    return arr
+```
+
+## Usage Example
+```python
+numbers = [64, 34, 25, 12, 22, 11, 90]
+sorted_numbers = selection_sort(numbers)
+print(sorted_numbers)  # Output: [11, 12, 22, 25, 34, 64, 90]
+```
+
+## Algorithm Steps
+1. Start with the first element as the minimum
+2. Search the minimum element in the remaining unsorted array
+3. Swap the found minimum with the first element of unsorted part
+4. Move the boundary of sorted array one element forward
+5. Repeat steps 1-4 until the entire array is sorted
+
+## Performance Comparison
+| Metric | Performance |
+|--------|-------------|
+| Time Complexity (Worst) | O(n²) |
+| Time Complexity (Average) | O(n²) |
+| Time Complexity (Best) | O(n²) |
+| Space Complexity | O(1) |
+| Stability | Unstable |
+
+## Applications
+- Small datasets where simple implementation is preferred
+- Systems with limited memory where in-place sorting is required
+- Educational purposes to understand basic sorting concepts
+- When the cost of swapping elements is high (makes fewer swaps than bubble sort)
+
+## Contributing
+Feel free to submit issues and enhancement requests or fork this implementation to create your own version.
+
+## License
+This implementation is released under the MIT License. Feel free to use it in your projects.
+
+
 ### Running Tests
 ```bash
 python -m unittest tests/test_linear_search.py
