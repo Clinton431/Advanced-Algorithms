@@ -350,6 +350,108 @@ print(sorted_numbers)  # Output: [11, 12, 22, 25, 34, 64, 90]
 - Educational purposes to understand basic sorting concepts
 - When the cost of swapping elements is high (makes fewer swaps than bubble sort)
 
+# Jump Search Algorithm
+
+## Overview
+Jump Search is an efficient searching algorithm designed for sorted arrays. It works by skipping a fixed number of elements and jumping ahead by steps, making it especially efficient for large datasets where binary search might be overkill and linear search too slow.
+
+## Time Complexity
+- Worst Case: O(√n)
+- Average Case: O(√n)
+- Best Case: O(1)
+
+## Space Complexity
+- O(1) - Jump Search is performed in-place
+
+## Advantages
+1. Better than linear search (O(n))
+2. Particularly useful for large datasets
+3. Works well when the element is closer to the beginning
+4. Good for systems where jumping back is cheaper than reading elements
+5. Simpler than binary search implementation
+
+## Disadvantages
+1. Only works on sorted arrays
+2. Not as fast as binary search for most cases
+3. Less efficient when target is towards the end of array
+4. Performance depends heavily on the size of the jump step
+
+## Implementation
+
+```python
+import math
+
+def jump_search(arr, target):
+    n = len(arr)
+    # Finding the optimal jump step size
+    step = int(math.sqrt(n))
+    
+    # Finding the block where the element is present
+    prev = 0
+    while arr[min(step, n) - 1] < target:
+        prev = step
+        step += int(math.sqrt(n))
+        if prev >= n:
+            return -1
+    
+    # Linear search in the identified block
+    while arr[prev] < target:
+        prev += 1
+        if prev == min(step, n):
+            return -1
+    
+    # If element is found
+    if arr[prev] == target:
+        return prev
+    
+    return -1
+```
+
+## Usage Example
+```python
+arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+target = 6
+result = jump_search(arr, target)
+print(f"Number {target} is at index {result}")  # Output: Number 6 is at index 6
+```
+
+## Algorithm Steps
+1. Determine the optimal jump size (√n)
+2. Jump ahead by the jump size until finding a value greater than the target
+3. Perform linear search in the block where target might exist
+4. Return the index if found, -1 if not found
+
+## Performance Comparison
+| Algorithm | Time Complexity | Space Complexity | Sorted Array Required |
+|-----------|----------------|------------------|----------------------|
+| Jump Search | O(√n) | O(1) | Yes |
+| Linear Search | O(n) | O(1) | No |
+| Binary Search | O(log n) | O(1) | Yes |
+
+## Best Use Cases
+1. Large sorted datasets
+2. Systems with expensive backward operations
+3. When target elements are likely to be at the beginning
+4. Memory-constrained environments
+5. When implementation simplicity is preferred over optimal speed
+
+## Real-world Applications
+- Database searching where records are sorted
+- File systems with sorted directories
+- Search in memory-mapped files
+- Mobile applications where binary search might be computational overkill
+
+## Code Optimization Tips
+1. Choose optimal jump size based on data size
+2. Consider data distribution when selecting jump size
+3. Implement bounds checking for array safety
+4. Use early termination when possible
+5. Consider cache-friendly implementations for large datasets
+
+## Contributing
+Contributions to improve the implementation or documentation are welcome. Please ensure any modifications maintain the O(√n) time complexity.
+
+
 ### Running Tests
 ```bash
 python -m unittest tests/test_linear_search.py
