@@ -109,8 +109,6 @@ Requires space on the call stack proportional to the number of recursive calls
 Each recursive call stores local variables
 
 # Sorting Algorithms
-# Sorting Algorithms
-
 ## What Are Sorting Algorithms?
 Sorting algorithms are methods used to arrange elements in a specific sequence or order, typically in ascending or descending order. They are fundamental to computer science and are used extensively in various applications to organize and structure data efficiently.
 
@@ -451,6 +449,412 @@ print(f"Number {target} is at index {result}")  # Output: Number 6 is at index 6
 ## Contributing
 Contributions to improve the implementation or documentation are welcome. Please ensure any modifications maintain the O(√n) time complexity.
 
+
+# Quick Sort Algorithm
+
+## Overview
+Quick Sort is a highly efficient, comparison-based sorting algorithm that uses a divide-and-conquer strategy. It was developed by Tony Hoare in 1959 and is still one of the most commonly used sorting algorithms in practice.
+
+## Time Complexity
+- Best Case: O(n log n)
+- Average Case: O(n log n)
+- Worst Case: O(n²)
+
+## Space Complexity
+- O(n) in the implementation shown
+- O(log n) with in-place implementation
+
+## Advantages
+1. Fast practical performance - typically O(n log n)
+2. Works well with virtual memory systems
+3. Can be implemented in different variations
+4. Cache friendly
+5. In-place sorting possible (with different implementation)
+
+## Disadvantages
+1. Unstable sort (doesn't preserve relative order of equal elements)
+2. O(n²) worst-case time complexity
+3. Recursive nature requires stack space
+4. Performance depends heavily on pivot selection
+
+## Implementation
+
+```python
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    pivot = arr[len(arr) // 2]  # Choose middle element as pivot
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    
+    return quick_sort(left) + middle + quick_sort(right)
+
+# Example usage
+numbers = [64, 34, 25, 12, 22, 11, 90]
+sorted_numbers = quick_sort(numbers)
+print("Original array:", numbers)
+print("Sorted array:", sorted_numbers)
+```
+
+## Alternative In-Place Implementation
+```python
+def quick_sort_inplace(arr, low, high):
+    def partition(low, high):
+        pivot = arr[high]
+        i = low - 1
+        
+        for j in range(low, high):
+            if arr[j] <= pivot:
+                i += 1
+                arr[i], arr[j] = arr[j], arr[i]
+        
+        arr[i + 1], arr[high] = arr[high], arr[i + 1]
+        return i + 1
+
+    if low < high:
+        pi = partition(low, high)
+        quick_sort_inplace(arr, low, pi - 1)
+        quick_sort_inplace(arr, pi + 1, high)
+    
+    return arr
+```
+
+## Algorithm Steps
+1. Choose a 'pivot' element from the array
+2. Partition other elements into:
+   - Elements less than pivot
+   - Elements equal to pivot
+   - Elements greater than pivot
+3. Recursively apply steps 1-2 to sub-arrays
+4. Combine the sorted sub-arrays
+
+## Performance Comparison
+| Metric | Performance |
+|--------|-------------|
+| Best Case | O(n log n) |
+| Average Case | O(n log n) |
+| Worst Case | O(n²) |
+| Space Complexity | O(n) or O(log n) |
+| Stability | Unstable |
+
+## Optimization Techniques
+1. **Pivot Selection Strategies**
+   - Middle element (current implementation)
+   - Random element
+   - Median-of-three
+   - First or last element
+
+2. **Partition Schemes**
+   - Lomuto partition
+   - Hoare partition
+   - Three-way partition
+
+3. **Small Subarray Optimization**
+   - Switch to insertion sort for small subarrays
+   - Typically beneficial for arrays < 10 elements
+
+## Best Use Cases
+1. Large datasets requiring efficient sorting
+2. Systems with good cache memory
+3. When average-case performance is more important than worst-case
+4. When stability is not required
+5. When in-place sorting is desired (with in-place implementation)
+
+## Real-world Applications
+1. Implementing efficient database sorting
+2. File system organization
+3. Numeric computations
+4. Data analysis applications
+5. Programming language standard libraries
+
+## Common Variations
+1. Dual-Pivot Quick Sort
+2. Three-Way Quick Sort
+3. External Quick Sort
+4. Parallel Quick Sort
+5. Hybrid Quick Sort (with other algorithms)
+
+## Debugging Tips
+1. Print subarray states during recursion
+2. Track pivot selections
+3. Monitor partition operations
+4. Check base cases
+5. Validate input and output arrays
+
+## Error Handling
+```python
+def quick_sort_with_validation(arr):
+    # Input validation
+    if not isinstance(arr, list):
+        raise TypeError("Input must be a list")
+    
+    # Check if elements are comparable
+    if not all(isinstance(x, type(arr[0])) for x in arr[1:]):
+        raise TypeError("All elements must be of the same comparable type")
+        
+    return quick_sort(arr)
+```
+
+# Merge Sort Algorithm
+
+## Overview
+Merge Sort is a divide-and-conquer sorting algorithm that recursively breaks down a problem into smaller, more manageable subproblems until they become simple enough to solve directly. It was invented by John von Neumann in 1945.
+
+## Time Complexity
+- Best Case: O(n log n)
+- Average Case: O(n log n)
+- Worst Case: O(n log n)
+
+## Space Complexity
+- O(n) - requires additional space proportional to the input size
+
+## Advantages
+1. Stable sorting algorithm (preserves relative order of equal elements)
+2. Guaranteed O(n log n) time complexity
+3. Well-suited for sorting linked lists
+4. Predictable performance regardless of input data
+5. Parallelizable due to divide-and-conquer nature
+
+## Disadvantages
+1. Requires O(n) extra space
+2. Overkill for small arrays
+3. Not in-place sorting algorithm
+4. Has to copy arrays during merge process
+
+## Implementation
+
+```python
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    # Divide the array into two halves
+    mid = len(arr) // 2
+    left = arr[:mid]
+    right = arr[mid:]
+    
+    # Recursively sort the two halves
+    left = merge_sort(left)
+    right = merge_sort(right)
+    
+    # Merge the sorted halves
+    return merge(left, right)
+
+def merge(left, right):
+    result = []
+    i = j = 0
+    
+    # Compare elements from both arrays and merge them in sorted order
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    
+    # Add remaining elements
+    result.extend(left[i:])
+    result.extend(right[j:])
+    
+    return result
+```
+
+## Algorithm Steps
+1. **Divide**: Split the input array into two equal halves
+2. **Conquer**: Recursively sort the two halves
+3. **Combine**: Merge the sorted halves to produce a sorted array
+4. **Base Case**: Arrays of size 1 are considered sorted
+
+## Performance Comparison
+| Metric | Performance |
+|--------|-------------|
+| Time Complexity (Best) | O(n log n) |
+| Time Complexity (Average) | O(n log n) |
+| Time Complexity (Worst) | O(n log n) |
+| Space Complexity | O(n) |
+| Stability | Stable |
+
+## Optimization Techniques
+
+### 1. Hybrid with Insertion Sort
+```python
+def optimized_merge_sort(arr):
+    if len(arr) <= 10:  # Switch to insertion sort for small arrays
+        return insertion_sort(arr)
+    # ... rest of merge sort implementation
+```
+
+### 2. Memory Optimization
+```python
+def memory_optimized_merge(arr, left, mid, right):
+    # Use temporary array only for left half
+    temp = arr[left:mid+1]
+    # ... merge implementation using single temp array
+```
+
+### 3. Iterative Implementation
+```python
+def iterative_merge_sort(arr):
+    width = 1
+    n = len(arr)
+    while width < n:
+        for i in range(0, n, 2*width):
+            merge(arr, i, min(i+width, n), min(i+2*width, n))
+        width *= 2
+```
+
+## Best Use Cases
+1. Large datasets requiring stable sorting
+2. External sorting of large files
+3. Sorting linked lists
+4. When predictable performance is required
+5. Parallel processing environments
+
+## Real-world Applications
+1. Database sorting operations
+2. External sorting in file systems
+3. Scientific computing applications
+4. Network routing algorithms
+5. Custom object sorting where stability is important
+
+## Error Handling and Input Validation
+```python
+def safe_merge_sort(arr):
+    # Type checking
+    if not isinstance(arr, list):
+        raise TypeError("Input must be a list")
+    
+    # Empty or single element check
+    if len(arr) <= 1:
+        return arr
+    
+    # Type consistency check
+    if not all(isinstance(x, type(arr[0])) for x in arr[1:]):
+        raise TypeError("All elements must be of the same comparable type")
+        
+    return merge_sort(arr)
+```
+
+## Memory Usage Analysis
+1. **Recursive Stack Space**: O(log n)
+2. **Temporary Arrays**: O(n)
+3. **Total Space**: O(n + log n) = O(n)
+
+## Parallel Implementation Considerations
+1. Divide array into chunks for parallel processing
+2. Process chunks independently
+3. Merge results using a parallel merge algorithm
+4. Consider overhead vs. gains for different input sizes
+
+## Testing Strategies
+1. Unit tests for different input sizes
+2. Edge cases (empty arrays, single elements)
+3. Already sorted arrays
+4. Reverse sorted arrays
+5. Arrays with duplicate elements
+
+## Debug Tips
+1. Print intermediate arrays during division
+2. Track recursion depth
+3. Monitor merge operations
+4. Validate sorted subarrays
+5. Check boundary conditions
+
+# Heap Sort Algorithm
+
+## Overview
+
+Heap Sort is an efficient, comparison-based sorting algorithm that uses a binary heap data structure. It divides its input into a sorted and an unsorted region, and iteratively shrinks the unsorted region by extracting the largest element and moving it to the sorted region.
+
+## Features
+
+- **Time Complexity**: O(n log n) in all cases (best, average, worst)
+- **Space Complexity**: O(1) auxiliary space (in-place sorting)
+- **Not Stable**: Equal elements may change their relative order
+- **Not Adaptive**: Performance doesn't improve for partially sorted input
+
+## Implementation
+
+This implementation contains two main functions:
+
+1. `heapify(arr, n, i)`: Maintains the heap property for a subtree rooted at index i.
+2. `heap_sort(arr)`: The main sorting function that builds a max heap and then extracts elements one by one.
+
+## How It Works
+
+1. **Build Max Heap**: First, the algorithm transforms the input array into a max heap, where the largest element is at the root.
+2. **Extract Elements**: It then repeatedly extracts the maximum element (root) and places it at the end of the array.
+3. **Maintain Heap Property**: After each extraction, it maintains the heap property by calling `heapify()` on the reduced heap.
+
+## Code Example
+
+```python
+def heapify(arr, n, i):
+    largest = i
+    left = 2 * i + 1
+    right = 2 * i + 2
+    
+    if left < n and arr[left] > arr[largest]:
+        largest = left
+    
+    if right < n and arr[right] > arr[largest]:
+        largest = right
+    
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+
+def heap_sort(arr):
+    n = len(arr)
+    
+    # Build a max heap
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+    
+    # Extract elements one by one
+    for i in range(n - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+    
+    return arr
+```
+
+## Usage
+
+```python
+# Example usage
+test_array = [12, 11, 13, 5, 6, 7]
+sorted_array = heap_sort(test_array)
+print(sorted_array)  # Output: [5, 6, 7, 11, 12, 13]
+```
+
+## Advantages
+
+- Efficient for large datasets
+- Guaranteed O(n log n) performance
+- In-place sorting algorithm (doesn't require extra memory)
+- No worst-case scenarios like quicksort's O(n²)
+
+## Disadvantages
+
+- Not stable (equal elements may change order)
+- Typically slower than quicksort in practice
+- Not adaptive to already-sorted or nearly-sorted data
+
+## Applications
+
+- Systems concerned with security and embedded systems
+- Where worst-case scenarios must be avoided
+- When memory usage is a concern
+
+## Further Improvements
+
+- Implementation can be optimized using iterative heapify instead of recursive
+- Can be modified for external sorting when dealing with large datasets that don't fit in memory
 
 ### Running Tests
 ```bash
