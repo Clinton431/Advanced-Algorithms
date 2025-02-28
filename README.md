@@ -856,6 +856,122 @@ print(sorted_array)  # Output: [5, 6, 7, 11, 12, 13]
 - Implementation can be optimized using iterative heapify instead of recursive
 - Can be modified for external sorting when dealing with large datasets that don't fit in memory
 
+
+# Insertion Sort Algorithm
+
+## Overview
+
+Insertion sort is a simple, stable sorting algorithm that builds the final sorted array one element at a time. It works similarly to how many people sort playing cards in their hands: starting with an empty left hand and the cards face down on the table, we take one card at a time and insert it into the correct position in the left hand.
+
+## Algorithm Description
+
+The algorithm works as follows:
+
+1. Assume that the first element is already sorted
+2. Take the next element (the key)
+3. Compare the key with all elements in the sorted sub-array
+4. Shift all elements in the sorted sub-array that are greater than the key to the right
+5. Insert the key at the correct position
+6. Repeat steps 2-5 until all elements are sorted
+
+## Characteristics
+
+- **Time Complexity**: 
+  - Best case: O(n) when the array is already sorted
+  - Average case: O(n²)
+  - Worst case: O(n²) when the array is sorted in reverse order
+- **Space Complexity**: O(1) - sorts in-place
+- **Stable**: Yes - maintains the relative order of equal elements
+- **Adaptive**: Yes - becomes faster as the array becomes more sorted
+- **Method**: Insertion
+- **Online**: Yes - can sort as it receives data
+
+## Code Explanation
+
+The Python implementation in `insertion_sort.py` contains two functions:
+
+1. `insertion_sort(arr)`: The standard implementation that takes an array and returns the sorted array.
+2. `insertion_sort_with_steps(arr)`: An educational version that prints each step of the algorithm.
+
+### Key Sections Explained
+
+```python
+# Store the current element as our key
+key = arr[i]
+
+# Initialize j to point to the element before the key
+j = i - 1
+
+# Move elements greater than key one position ahead
+while j >= 0 and arr[j] > key:
+    arr[j + 1] = arr[j]  # Shift element to the right
+    j -= 1               # Move to the previous element
+    
+# Place the key in its correct position in the sorted sequence
+arr[j + 1] = key
+```
+
+This core section:
+1. Takes the current element as a "key"
+2. Shifts all larger elements in the sorted portion to the right
+3. Inserts the key in its correct position
+
+## Example Walkthrough
+
+Let's sort the array `[5, 2, 4, 6, 1, 3]`:
+
+1. Start with first element `[5]` considered as sorted
+2. Take `2`: Compare with `5`, shift `5` right, place `2` at position 0: `[2, 5, 4, 6, 1, 3]`
+3. Take `4`: Compare with `5`, shift `5` right, compare with `2`, place `4` at position 1: `[2, 4, 5, 6, 1, 3]`
+4. Take `6`: Already in correct position: `[2, 4, 5, 6, 1, 3]`
+5. Take `1`: Shift `6`, `5`, `4`, `2` right, place `1` at position 0: `[1, 2, 4, 5, 6, 3]`
+6. Take `3`: Shift `6`, `5`, `4` right, place `3` at position 2: `[1, 2, 3, 4, 5, 6]`
+
+## Usage
+
+```python
+from insertion_sort import insertion_sort
+
+# Your array to sort
+arr = [12, 11, 13, 5, 6]
+
+# Sort the array
+sorted_arr = insertion_sort(arr)
+
+print(sorted_arr)  # Output: [5, 6, 11, 12, 13]
+```
+
+## When to Use Insertion Sort
+
+Insertion sort works best when:
+- The array is small (typically less than 20 elements)
+- The array is nearly sorted
+- Memory space is limited
+- You need a simple implementation
+- You need an online algorithm (can sort as data arrives)
+
+For larger or completely unsorted arrays, more efficient algorithms like QuickSort, MergeSort, or HeapSort are generally preferred.
+
+## Advantages
+
+1. Simple implementation
+2. Efficient for small data sets
+3. Adaptive - efficient for partially sorted arrays
+4. Stable - maintains relative order of equal elements
+5. In-place - only requires O(1) extra space
+6. Online - can sort as it receives input
+
+## Disadvantages
+
+1. Inefficient for large arrays compared to more advanced algorithms
+2. Requires shifting elements, which can be expensive for arrays (but not for linked lists)
+
+## Further Reading
+
+- [Insertion Sort on Wikipedia](https://en.wikipedia.org/wiki/Insertion_sort)
+- [Visualization of Insertion Sort](https://visualgo.net/en/sorting)
+- [Comparison with Other Sorting Algorithms](https://www.geeksforgeeks.org/comparison-among-bubble-sort-selection-sort-and-insertion-sort/)
+
 ### Running Tests
 ```bash
 python -m unittest tests/test_linear_search.py
